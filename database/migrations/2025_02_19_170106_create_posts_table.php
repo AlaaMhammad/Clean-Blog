@@ -20,10 +20,6 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->foreignId('author_di')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->nullable()->constrained()->nullOnDelete();
-
-
-
-
             $table->timestamps();
         });
     }
