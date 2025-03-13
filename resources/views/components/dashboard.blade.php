@@ -101,18 +101,18 @@
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Contacts -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item {{ request()->routeIs('admin.contact_messages') ? 'active' : ''}}">
+                <a class="nav-link" href="{{ route('admin.contact_messages') }}">
                     <i class="fas fa-fw fa-comments"></i>
                     <span>Contacts Message</span>
-                <span style="top: 25px; right: 20px;" class="badge badge-danger badge-counter ">7</span></a>
+                <span style="top: 25px; right: 20px;" class="badge badge-danger badge-counter ">{{ $unread_messages_count }}</span></a>
             </li>
 
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Settings -->
-            <li class="nav-item">
-                <a class="nav-link" href="index.html">
+            <li class="nav-item {{ request()->routeIs('admin.settings') ? 'active' : ''}}">
+                <a class="nav-link" href="{{ route('admin.settings') }}">
                     <i class="fas fa-fw fa-cogs"></i>
                     <span>Settings</span></a>
             </li>
@@ -151,7 +151,7 @@
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="fas fa-envelope fa-fw"></i>
                                 <!-- Counter - Messages -->
-                                <span class="badge badge-danger badge-counter">7</span>
+                                <span class="badge badge-danger badge-counter">{{ $unread_messages_count }}</span>
                             </a>
                             <!-- Dropdown - Messages -->
                             <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -217,26 +217,32 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span>
-                                <img class="img-profile rounded-circle"
-                                    src="{{ asset('assets/img/undraw_profile.svg') }}">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                                @php
+                                    $path = Auth::user()->avatar ? Auth::user()->avatar : 'assets/img/undraw_profile.svg';
+                                @endphp
+                                <img style='object-fit:cover' class="img-profile rounded-circle"
+                                    src="{{ asset($path) }}">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="{{ route('admin.settings') }}">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Settings
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <a onclick="event.preventDefault(); document.querySelector('#logout-form').submit() " class="dropdown-item" href="{{ route('logout') }}">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
+                                <form action="{{ route('logout') }}" method="POST" id="logout-form">
+                                    @csrf
+                                </form>
                             </div>
                         </li>
 

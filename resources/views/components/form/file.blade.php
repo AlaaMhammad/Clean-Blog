@@ -1,13 +1,38 @@
-@props(['label' => '', 'name' => '', 'oldimage' => ''])
+@props(['label' => '', 'name' => '', 'oldimage' => '', 'can_delete' => false])
 
 @if ($label)
     <label for="{{ $name }}" class="form-label">{{ $label }}</label>
 @endif
 
-<input type="fil" class="form-control @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}">
+<input type="fil" class="form-control @error($name) is-invalid @enderror" id="{{ $name }}" name="{{ $name }}" {{ $attributes }}>
 @if ($oldimage)
-    <img width="100" src="{{ asset($oldimage) }}" alt="{{ $oldimage }}" class="img-thumbnail mt-1 >
+    <div class="position-relative d-inline-block">
+        @if ($can_delete)
+            <div id="del_site_image">X</div>
+        @endif
+        <img width="100" src="{{ asset($oldimage) }}" alt="{{ $oldimage }}" class="img-thumbnail mt-1" >
+    </div>
 @endif
 @error($name)
     <div class="invalid-feedback">{{ $message }}</div>
 @enderror
+
+@push('css')
+    <style>
+        #del_site_image {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            font-size: 12px;
+            top: 0;
+            right: 0;
+            background: red;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    
+@endpush

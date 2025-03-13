@@ -4,8 +4,7 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                     <div class="site-heading">
-                        <h1>Clean Blog</h1>
-                        <span class="subheading">A Blog Theme by Start Bootstrap</span>
+                        <h1>Author: {{ $author->name }}</h1>
                     </div>
                 </div>
             </div>
@@ -15,7 +14,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                @foreach ($posts as $post)
+                @foreach ($posts as $post )
                     <!-- Post preview-->
                     <div class="post-preview">
                         <a href="{{ route('website.post', $post) }}">
@@ -23,11 +22,9 @@
                             <h3 class="post-subtitle">{{ $post->subtitle }}</h3>
                         </a>
                         <p class="post-meta">
-                            Posted in <a href="{{ route('website.category', $post->category->slug) }}">
-                                {{ $post->category->name }} </a> by
-                            <a
-                                href="{{ route('website.author', $post->author->username) }}">{{ $post->author->name }}</a>
-                            on {{ $post->created_at->format('F d, Y') }}
+                            Posted in <a href="{{ route('website.category', $post->category->slug) }}"> {{ $post->category->name }} </a> by
+                            <a href="{{ route('website.author', $post->author->username) }}">{{ $post->author->name }}</a>
+                            on {{ $post->created_at->format('F d, Y') }} 
                         </p>
                     </div>
                     <!-- Divider-->
@@ -39,3 +36,4 @@
         </div>
     </div>
 </x-layout>
+
